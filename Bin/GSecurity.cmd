@@ -1,6 +1,15 @@
 @echo off
 title GSecurity && color 0b
 
+:: Group Policy
+rd /s /q "%windir%\System32\Group Policy"
+rd /s /q "%windir%\System32\Group Policy Users"
+rd /s /q "%windir%\SysWOW64\Group Policy"
+rd /s /q "%windir%\SysWOW64\Group Policy Users"
+Reg delete "HKLM\SOFTWARE\Policies" /f
+Reg delete "HKCU\Software\Policies" /f
+Lgpo /s GSecurity.inf
+
 :: System failure watch off
 wmic recoveros set WriteToSystemLog = False
 wmic recoveros set SendAdminAlert = False
@@ -28,14 +37,6 @@ dism /Online /Disable-Feature /FeatureName:"SMB1Protocol-Server" /NoRestart
 :: Enable security against PowerShell 2.0 downgrade attacks-
 dism /online /Disable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" /NoRestart
 dism /online /Disable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2" /NoRestart
-
-:: Group Policy
-rd /s /q "%windir%\System32\Group Policy"
-rd /s /q "%windir%\System32\Group Policy Users"
-rd /s /q "%windir%\SysWOW64\Group Policy"
-rd /s /q "%windir%\SysWOW64\Group Policy Users"
-Reg delete "HKLM\SOFTWARE\Policies" /f
-Reg delete "HKCU\Software\Policies" /f
 
 :: Disable Netbios
 @powershell.exe -ExecutionPolicy Bypass -Command "Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled -eq $true } | ForEach-Object { $_.SetTcpipNetbios(2) }"
