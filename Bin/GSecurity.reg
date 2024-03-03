@@ -1622,6 +1622,20 @@ F0,35,38,E7,EF,BD,C4,C6,39,D9,E6,AF,F3,B1,A5
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W3SVC]
 "Start"=dword:00000004
 
+; Secure hyper-v
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell]
+"ExecutionPolicy"="Restricted"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters]
+"SMB1"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\EMET\Defaults]
+"DEP"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Exploit Guard\ControlledFolderAccess]
+"EnableControlledFolderAccess"=dword:00000001
+
 ; Privacy off / Telemetry to max
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack]
