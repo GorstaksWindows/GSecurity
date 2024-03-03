@@ -55,31 +55,10 @@ rd /s /q "%windir%\SysWOW64\Group Policy"
 rd /s /q "%windir%\SysWOW64\Group Policy Users"
 Reg delete "HKLM\SOFTWARE\Policies" /f
 Reg delete "HKCU\Software\Policies" /f
-lgpo /s GSecurity.inf
+rem lgpo /s GSecurity.inf
 
 :: Disable Netbios
 @powershell.exe -ExecutionPolicy Bypass -Command "Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled -eq $true } | ForEach-Object { $_.SetTcpipNetbios(2) }"
-
-:: Perms
-for %%d in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
-    takeown /F %%d:\
-    icacls %%d:\ /remove "Administrators"
-    icacls %%d:\ /grant "Administrators":RX
-    icacls %%d:\ /remove "Authenticated Users"
-    icacls %%d:\ /remove "Users"
-    icacls %%d:\ /remove "System"
-    icacls %%d:\ /grant "*S-1-2-1":M
-    icacls %%d:\ /deny "Network":F
-)
-    icacls C:\ /grant "System":M
-
-:: Take ownership of Desktop
-takeown /f "%SystemDrive%\Users\Public\Desktop" /r /d y
-icacls "%SystemDrive%\Users\Public\Desktop" /inheritance:r
-icacls "%SystemDrive%\Users\Public\Desktop" /grant:r %username%:(OI)(CI)F /t /l /q /c
-takeown /f "%USERPROFILE%\Desktop" /r /d y
-icacls "%USERPROFILE%\Desktop" /inheritance:r
-icacls "%USERPROFILE%\Desktop" /grant:r %username%:(OI)(CI)F /t /l /q /c
 
 :: Delete Provisioning Packages
 @powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Uninstall-ProvisioningPackage -AllInstalledPackages"
@@ -92,10 +71,6 @@ rd /s /q %ProgramData%\Microsoft\Provisioning
 )
 echo All powershell files have been executed.
 
-:: WDAC
-rem md %windir%\system32\codeintegrity
-rem xcopy codeintegrity %windir%\system32\codeintegrity /Y /C /E /H /R /I
-
 :: Mitigate Spectre Variant 2 and Meltdown in host operating system
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d 3 /f
 wmic cpu get name | findstr "Intel" >nul && (
@@ -104,6 +79,10 @@ wmic cpu get name | findstr "Intel" >nul && (
 wmic cpu get name | findstr "AMD" >nul && (
     reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d 64 /f
 )
+
+:: WDAC
+rem md %windir%\system32\codeintegrity
+rem xcopy codeintegrity %windir%\system32\codeintegrity /Y /C /E /H /R /I
 
 :: Drivers
 rem %windir%\system32\pnputil /add-driver *.inf /subdirs /install
