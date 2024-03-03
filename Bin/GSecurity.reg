@@ -939,10 +939,9 @@ F0,35,38,E7,EF,BD,C4,C6,39,D9,E6,AF,F3,B1,A5
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall\Restrictions\DenyDeviceIDs]
 "1"="ROOT\\RDPBUS"
-"2"="ACPI\\PNP0200"
-"3"="ROOT\\mssmbios"
+"2"="ROOT\\mssmbios"
+"3"="ACPI\\PNP0200"
 "4"="ACPI\\PNP0C14"
-"5"="MMDEVAPI\\AudioEndpoints"
 
 ; Certificates
 
