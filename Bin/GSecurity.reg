@@ -468,9 +468,16 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows NT\Printers]
 "RedirectionGuardPolicy"=dword:00000001
 
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Connect]
+"RequirePinForPairing"=dword:00000002
+
 [HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\CredentialsDelegation]
 "RestrictedRemoteAdministration"=dword:00000001
 "RestrictedRemoteAdministrationType"=dword:00000002
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\WirelessDisplay]
+"EnforcePinBasedPairing"=dword:00000001
+"PreferPinBasedPairing"=dword:00000001
 
 ; Worms Doors Cleaner
 
