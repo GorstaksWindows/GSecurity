@@ -460,6 +460,11 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg]
 "remoteregaccess"=dword:00000001
 
+; Credential guard
+
+[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\LSA]
+"LsaCfgFlags"=dword:00000001
+
 ; Worms Doors Cleaner
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Rpc\Internet]
