@@ -460,10 +460,17 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg]
 "remoteregaccess"=dword:00000001
 
-; Credential guard
+; Guards
 
 [HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\LSA]
 "LsaCfgFlags"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows NT\Printers]
+"RedirectionGuardPolicy"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\CredentialsDelegation]
+"RestrictedRemoteAdministration"=dword:00000001
+"RestrictedRemoteAdministrationType"=dword:00000002
 
 ; Worms Doors Cleaner
 
