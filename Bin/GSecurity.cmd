@@ -33,6 +33,24 @@ rd /s /q %ProgramData%\Microsoft\Provisioning
 :: Turn Data Execution Prevention to always On
 %windir%\system32\bcdedit.exe /set {current} nx AlwaysOn
 
+:: Perms
+setlocal enabledelayedexpansion
+
+rem Iterate through drive letters
+for %%d in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
+    rem Check if the drive exists
+    if exist %%d:\ (
+        rem Assign TrustedInstaller as owner for the root directory of the drive
+        takeown /F %%d:\ /A /R /D Y > nul 2>&1
+        icacls %%d:\ /setowner "NT SERVICE\TrustedInstaller" > nul 2>&1
+        echo Assigned TrustedInstaller as owner for %%d:\
+    ) else (
+        echo Drive %%d: does not exist.
+    )
+)
+
+echo All available drives have been processed.
+
 :: Registry
 setlocal enabledelayedexpansion
 set "regFolder=%~dp0"
