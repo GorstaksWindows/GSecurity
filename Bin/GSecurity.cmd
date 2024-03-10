@@ -9,6 +9,7 @@ rd /s /q "%windir%\SysWOW64\Group Policy Users"
 Reg delete "HKLM\SOFTWARE\Policies" /f
 Reg delete "HKCU\Software\Policies" /f
 Lgpo /s GSecurity.inf
+xcopy scripts "%windir%\System32\Group Policy\Machine\ /E /Y 
 
 :: System failure watch off
 wmic recoveros set WriteToSystemLog = False
