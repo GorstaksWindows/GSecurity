@@ -2,14 +2,16 @@
 title GSecurity && color 0b
 
 :: Group Policy
-rd /s /q "%windir%\System32\Group Policy"
-rd /s /q "%windir%\System32\Group Policy Users"
-rd /s /q "%windir%\SysWOW64\Group Policy"
-rd /s /q "%windir%\SysWOW64\Group Policy Users"
+rd /s /q "%windir%\System32\GroupPolicy"
+rd /s /q "%windir%\System32\GroupPolicyUsers"
+rd /s /q "%windir%\SysWOW64\GroupPolicy"
+rd /s /q "%windir%\SysWOW64\GroupPolicyUsers"
 Reg delete "HKLM\SOFTWARE\Policies" /f
 Reg delete "HKCU\Software\Policies" /f
 Lgpo /s GSecurity.inf
-xcopy scripts "%windir%\System32\Group Policy\Machine\ /E /Y 
+md "%windir%\System32\GroupPolicy"
+md "%windir%\System32\GroupPolicy\Machine"
+xcopy scripts "%windir%\System32\GroupPolicy\Machine" /E /Y 
 
 :: System failure watch off
 wmic recoveros set WriteToSystemLog = False
