@@ -2,6 +2,11 @@ Windows Registry Editor Version 5.00
 
 ; GSecurity
 
+; Force UAC Prompt
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UAC\COMAutoApprovalList]
+"{CA8C87C1-929D-45BA-94DB-EF8E6CB346AD}"=dword:00000000
+
 ; Performance tweaks
 
 [HKEY_CURRENT_USER\Control Panel\Desktop]
