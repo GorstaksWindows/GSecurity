@@ -404,11 +404,29 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Rpc\Internet]
 "UseInternetPorts"="N"
 
-[-HKEY_LOCAL_MACHINE\software\microsoft\systemcertificates\root\certificates\0119e81be9a14cd8e22f40ac118c687ecba3f4d8]
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\SystemCertificates\Root\Certificates\F1CB541A50434B2048B8F89FFE39390B90C3272F]
 
-[-HKEY_LOCAL_MACHINE\software\microsoft\systemcertificates\root\certificates\06f1aa330b927b753a40e68cdf22e34bcbef3352]
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\SystemCertificates\Root\Certificates\06f1aa330b927b753a40e68cdf22e34bcbef3352]
 
-[-HKEY_LOCAL_MACHINE\software\microsoft\systemcertificates\root\certificates\31f9fc8ba3805986b721ea7295c65b3a44534274]
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\SystemCertificates\Root\Certificates\0119e81be9a14cd8e22f40ac118c687ecba3f4d8]
+
+[-HKEY_LOCAL_MACHINE\Software\Microsoft\SystemCertificates\Root\Certificates\31f9fc8ba3805986b721ea7295c65b3a44534274]
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\F1CB541A50434B2048B8F89FFE39390B90C3272F]
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\F1CB541A50434B2048B8F89FFE39390B90C3272F]
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\06f1aa330b927b753a40e68cdf22e34bcbef3352]
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\06f1aa330b927b753a40e68cdf22e34bcbef3352]
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\0119e81be9a14cd8e22f40ac118c687ecba3f4d8]
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\0119e81be9a14cd8e22f40ac118c687ecba3f4d8]
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\31f9fc8ba3805986b721ea7295c65b3a44534274]
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\SystemCertificates\Disallowed\Certificates\31f9fc8ba3805986b721ea7295c65b3a44534274]
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\WcmSvc\wifinetworkmanager\config]
 "AutoConnectAllowedOEM"=dword:00000000
