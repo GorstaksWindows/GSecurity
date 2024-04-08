@@ -738,7 +738,7 @@ Windows Registry Editor Version 5.00
 "NoPrinting"=dword:00000000
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\CredUI]
-"EnableSecureCredentialPrompting"=dword:00000001
+"EnableSecureCredentialPrompting"=dword:00000000
 "EnumerateAdministrators"=dword:00000000
 
 [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection]
