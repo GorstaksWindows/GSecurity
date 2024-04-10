@@ -764,8 +764,7 @@ Windows Registry Editor Version 5.00
 "requireserververification"=dword:00000001
 
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\office\16.0\word\options]
-"defaultformat"="
-              "
+"defaultformat"=""
 "dontupdatelinks"=dword:00000001
 
 [HKEY_CURRENT_USER\software\policies\microsoft\office\16.0\word\security]
@@ -851,7 +850,7 @@ Windows Registry Editor Version 5.00
 "NC_DeleteAllUserConnection"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\PersistentRoutes]
-"208.0.0.0,255.255.255.0,0.0.0.0,1"=""
+"208.95.186.0,255.255.255.0,0.0.0.0,1"=""
 "104.21.89.0,255.255.255.0,0.0.0.0,1"=""
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings]
