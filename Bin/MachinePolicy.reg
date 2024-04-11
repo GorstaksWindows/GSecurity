@@ -1872,6 +1872,7 @@ Windows Registry Editor Version 5.00
 "ItemData"="C:\\ProgramData\\Microsoft\\Windows Defender\\Platform"
 "LastModified"=hex(b):e0,53,86,62,06,be,d6,01
 "SaferFlags"=dword:00000000
+
 ; Security tweaks
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\KeyExchangeAlgorithms\Diffie-Hellman]
