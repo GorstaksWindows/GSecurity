@@ -2,6 +2,12 @@ Windows Registry Editor Version 5.00
 
 ; GSecurity
 
+; Routes
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\PersistentRoutes]
+"208.95.186.0,255.255.255.0,0.0.0.0,1"=""
+"104.21.89.186,255.255.255.255,0.0.0.0,1"=""
+
 ; Devices
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceInstall]
