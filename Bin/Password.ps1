@@ -7,7 +7,7 @@ $scriptPath = "$startupFolder\PasswordChangeScript.ps1"
 # Check if the script is already present in the startup folder
 if (-not (Test-Path $scriptPath)) {
     # If not present, copy the script to the startup folder
-    $scriptContent = @"
+
 # Function to generate a random password
 function Generate-RandomPassword {
     $chars = [char[]]('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()')
