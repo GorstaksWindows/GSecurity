@@ -45,8 +45,56 @@ function Block-Execution {
     # Add your additional blocking logic here, such as killing the process or quarantining the file.
 }
 
-# Function to add the script to Windows startup folder
-function AddToStartup {
+# Function to monitor file system changes
+function Monitor-FileSystem {
+    $fileWatcher = New-Object System.IO.FileSystemWatcher
+    $fileWatcher.Path = "C:\"  # Monitor the entire system
+    $fileWatcher.IncludeSubdirectories = $true
+    $fileWatcher.EnableRaisingEvents = $true
+
+    Register-ObjectEvent $fileWatcher "Changed" -Action {
+        $filePath = $Event.SourceEventArgs.FullPath
+        Write-Host "File modified: $filePath"
+
+        # Check if the file is detected as malware on VirusTotal
+        $scanResults = Get-VirusTotalScan -FilePath $filePath
+        if ($scanResults.data.attributes.last_analysis_stats.malicious -gt 0) {
+            Block-Execution -FilePath $filePath -Reason "File detected as malware on VirusTotal"
+        }
+    } | Out-Null
+}
+
+# Function to monitor running processes
+function Monitor-Processes {
+    $processWatcher = New-Object System.Diagnostics.Eventing.Reader.EventLogWatcher "Security", [System.Diagnostics.Eventing.Reader.PathType]::LogName
+    $processWatcher.EventRecordWritten += {
+        $processEvent = $_.EventRecord
+
+        # Extract process information from the event
+        $processName = $processEvent.Properties[5].Value
+        $processId = $processEvent.Properties[0].Value
+
+        Write-Host "Process started: $processName (ID: $processId)"
+
+        # Add your process monitoring logic here, such as checking against a list of known malicious processes.
+    }
+
+    $processWatcher.Start()
+}
+
+# Function to monitor network activity
+function Monitor-Network {
+    # Implement network monitoring logic here
+}
+
+# Function to perform heuristic scanning
+function Heuristic-Scan {
+    # Implement heuristic scanning logic here
+}
+
+# Check if the script is already added to startup
+if (-Not (Test-Path $MyInvocation.MyCommand.Path -PathType Leaf)) {
+    # Add the script to the startup folder
     $scriptPath = $MyInvocation.MyCommand.Definition
     $startupFolderPath = [Environment]::GetFolderPath("Startup")
     $shortcutPath = Join-Path $startupFolderPath "SimpleAntivirus.lnk"
@@ -60,39 +108,14 @@ function AddToStartup {
     }
 }
 
-# Function to monitor file creations
-function Monitor-FileCreations {
-    $fileWatcher = New-Object System.IO.FileSystemWatcher
-    $fileWatcher.Path = "C:\Users"  # Specify the path to monitor here
-    $fileWatcher.IncludeSubdirectories = $true
-    $fileWatcher.EnableRaisingEvents = $true
+# Start monitoring
+Monitor-FileSystem
+Monitor-Processes
+Monitor-Network
+Heuristic-Scan
 
-    Register-ObjectEvent $fileWatcher "Created" -Action {
-        $filePath = $Event.SourceEventArgs.FullPath
-        Write-Host "New file created: $filePath"
-
-        $scanResults = Get-VirusTotalScan -FilePath $filePath
-
-        # Check if the file is detected as malware on VirusTotal
-        if ($scanResults.data.attributes.last_analysis_stats.malicious -gt 0) {
-            Block-Execution -FilePath $filePath -Reason "File detected as malware on VirusTotal"
-        }
-    } | Out-Null
+# Keep the script running to maintain monitoring
+Write-Host "Antivirus is now running. Press Ctrl+C to exit."
+while ($true) {
+    Start-Sleep -Seconds 60
 }
-
-# Check if the script is already added to startup
-function IsInStartup {
-    $scriptPath = $MyInvocation.MyCommand.Definition
-    $startupFolderPath = [Environment]::GetFolderPath("Startup")
-    $shortcutPath = Join-Path $startupFolderPath "SimpleAntivirus.lnk"
-
-    return (Test-Path $shortcutPath)
-}
-
-# Check if the script is already added to startup
-if (-Not (IsInStartup)) {
-    AddToStartup
-}
-
-# Start monitoring file creations
-Monitor-FileCreations
