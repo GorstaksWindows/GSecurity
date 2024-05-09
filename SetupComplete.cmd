@@ -10,10 +10,13 @@ pushd %~dp0
 cd Bin
 setlocal enabledelayedexpansion
 
+:: Create a system restore point
+powershell -Command "Checkpoint-Computer -Description 'Pre-script Restore Point' -RestorePointType 'MODIFY_SETTINGS'"
+
 :: Powershell
-    for %%P in (*.ps1) do (
-        echo Running %%P as administrator...
-        powershell -Command "Start-Process -WindowStyle Hidden -Verb RunAs powershell.exe -ArgumentList '-ExecutionPolicy Bypass -File ""%%P""'"
+for %%P in (*.ps1) do (
+    echo Running %%P as administrator...
+    powershell -Command "Start-Process -WindowStyle Hidden -Verb RunAs powershell.exe -ArgumentList '-ExecutionPolicy Bypass -File ""%%P""'"
 )
 echo All powershell files have been executed.
 
