@@ -29,7 +29,7 @@ echo All batch files have been executed.
 
 :: Registry
 setlocal enabledelayedexpansion
-set "regFolder=%~dp0"
+set "regFolder=%~dp0\Bin"
 pushd "%regFolder%"
 for %%F in (*.reg) do (
     echo Importing: %%F
