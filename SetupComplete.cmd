@@ -14,27 +14,19 @@ setlocal enabledelayedexpansion
 powershell -Command "Checkpoint-Computer -Description 'Pre-script Restore Point' -RestorePointType 'MODIFY_SETTINGS'"
 
 :: Powershell
-for %%P in (*.ps1) do (
-    echo Running %%P as administrator...
-    powershell -Command "Start-Process -WindowStyle Hidden -Verb RunAs powershell.exe -ArgumentList '-ExecutionPolicy Bypass -File ""%%P""'"
+    for %%A in (*.ps1) do (
+        @powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%%A" -WindowStyle Hidden
 )
-echo All powershell files have been executed.
 
 :: Batch
 for %%B in (*.cmd) do (
-    echo Executing: %%B
     call "%%B"
 )
-echo All batch files have been executed.
 
 :: Registry
-setlocal enabledelayedexpansion
-set "regFolder=%~dp0\Bin"
-pushd "%regFolder%"
-for %%F in (*.reg) do (
-    echo Importing: %%F
-    reg.exe import "%%F"
+for %%C in (*.reg) do (
+    reg import "%%C"
 )
-echo All registry files have been imported.
+endlocal
 
 endlocal
