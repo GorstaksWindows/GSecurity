@@ -10,6 +10,9 @@ pushd %~dp0
 cd Bin
 setlocal enabledelayedexpansion
 
+:: Script execution
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass}"
+
 :: Create a system restore point
 powershell -Command "Checkpoint-Computer -Description 'Pre-script Restore Point' -RestorePointType 'MODIFY_SETTINGS'"
 
