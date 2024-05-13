@@ -31,5 +31,3 @@ for %%C in (*.reg) do (
     reg import "%%C"
 )
 endlocal
-
-endlocal
