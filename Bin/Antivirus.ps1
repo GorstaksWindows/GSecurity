@@ -113,9 +113,3 @@ Monitor-FileSystem
 Monitor-Processes
 Monitor-Network
 Heuristic-Scan
-
-# Keep the script running to maintain monitoring
-Write-Host "Antivirus is now running. Press Ctrl+C to exit."
-while ($true) {
-    Start-Sleep -Seconds 60
-}
