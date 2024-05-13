@@ -1,30 +1,5 @@
-# Get the list of installed programs
-$installedPrograms = Get-WmiObject -Query "SELECT * FROM Win32_Product"
-
-# Filter for Chromium browsers
-$chromiumBrowsers = $installedPrograms | Where-Object { $_.Name -like "*Chromium*" }
-
-foreach ($browser in $chromiumBrowsers) {
-    Write-Output "Found Chromium browser: $($browser.Name)"
-
-    # Path to the preferences file may vary
-    $prefsPath = Join-Path $browser.InstallLocation 'User Data\Default\Preferences'
-
-    if (Test-Path $prefsPath) {
-        # Load existing preferences
-        $prefs = Get-Content $prefsPath | ConvertFrom-Json
-
-        # Modify preferences to block WebRTC and Chrome Remote Desktop
-        $prefs.webrtc.ip_handling_policy = "disable_non_proxied_udp"
-        $prefs.RemoteAccessHost.client = $false
-
-        # Save modified preferences
-        $prefs | ConvertTo-Json | Set-Content $prefsPath
-    }
-}
-
-# Function to check if a program is installed
-function Check-ProgramInstalled {
+# Define function to check if a program is installed
+function Test-ProgramInstalled {
     param (
         [string]$programName
     )
@@ -41,26 +16,47 @@ function Check-ProgramInstalled {
     return $false
 }
 
-# List of common browser executables
+# Define function to modify Chromium browser preferences
+function Modify-ChromiumPreferences {
+    param (
+        [string]$InstallLocation
+    )
+
+    $prefsPath = Join-Path $InstallLocation 'User Data\Default\Preferences'
+
+    if (Test-Path $prefsPath) {
+        $prefs = Get-Content $prefsPath | ConvertFrom-Json
+
+        # Modify preferences to block WebRTC and Chrome Remote Desktop
+        $prefs.webrtc.ip_handling_policy = "disable_non_proxied_udp"
+        $prefs.RemoteAccessHost.client = $false
+
+        # Save modified preferences
+        $prefs | ConvertTo-Json | Set-Content $prefsPath
+    }
+}
+
+# Define list of common browser executables
 $browsers = @(
     "chrome.exe",
     "firefox.exe",
     "iexplore.exe",
     "brave.exe",
     "edge.exe",
-    "msedge.exe",
+    "msedge.exe"
     # Add more browsers as needed
 )
 
-# Check if each browser is installed and block its internet access
+# Loop through browsers to block internet access
 foreach ($browser in $browsers) {
-    if (Check-ProgramInstalled $browser) {
+    if (Test-ProgramInstalled $browser) {
+        $browserPath = "C:\Program Files\Internet Browsers\$browser"
         Write-Host "Blocking internet access for $browser"
-        New-NetFirewallRule -DisplayName "Block $browser internet access" -Direction Outbound -Program "C:\Program Files\Internet Browsers\$browser" -Action Block
+        New-NetFirewallRule -DisplayName "Block $browser internet access" -Direction Outbound -Program $browserPath -Action Block
     }
 }
 
-# Get all fixed drives
+# Get all fixed drives and deny network access
 $drives = Get-Volume
 
 foreach ($drive in $drives) {
@@ -83,4 +79,13 @@ foreach ($drive in $drives) {
     } catch {
         Write-Host "Failed to deny NETWORK access on $drivePath. Error: $_" -ForegroundColor Red
     }
+}
+
+# Get list of installed programs and filter Chromium browsers
+$chromiumBrowsers = Get-WmiObject -Query "SELECT * FROM Win32_Product" | Where-Object { $_.Name -like "*Chromium*" }
+
+# Loop through Chromium browsers to modify preferences
+foreach ($browser in $chromiumBrowsers) {
+    Write-Output "Found Chromium browser: $($browser.Name)"
+    Modify-ChromiumPreferences -InstallLocation $browser.InstallLocation
 }
