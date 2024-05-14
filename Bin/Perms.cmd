@@ -1,12 +1,19 @@
+@echo off
+
 :: Perms
-for %%d in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
-    takeown /F %%d:\
-    icacls %%d:\ /remove "Administrators"
-    icacls %%d:\ /grant "Administrators":RX
-    icacls %%d:\ /remove "Authenticated Users"
-    icacls %%d:\ /remove "Users"
-    icacls %%d:\ /remove "System"
-    icacls %%d:\ /grant "*S-1-2-1":M
-    icacls %%d:\ /deny "Network":F
+
+REM Loop through all drives except the system reserved drive
+for %%d in (C: D: E: F: G: H: I: J: K: L: M: N: O: P: Q: R: S: T: U: V: W: X: Y: Z:) do (
+    REM Set the owner of the root of the drive to TrustedInstaller
+    icacls "%%d\" /setowner "NT SERVICE\TrustedInstaller"
 )
-    icacls C:\ /grant "System":M
+
+echo Ownership set to TrustedInstaller for the root of all local drives.
+
+REM Take ownership of users folder
+takeown /f "%USERPROFILE%" /r /d y
+icacls "%USERPROFILE%" /inheritance:r
+icacls "%USERPROFILE%" /grant:r %username%:(OI)(CI)F /t /l /q /c
+
+echo Ownership of users folder set to %username%
+
