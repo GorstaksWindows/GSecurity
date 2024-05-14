@@ -14,7 +14,7 @@ setlocal enabledelayedexpansion
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass}"
 
 :: Create a system restore point
-powershell -Command "Checkpoint-Computer -Description 'Pre-script Restore Point' -RestorePointType 'MODIFY_SETTINGS'"
+wmic.exe /Namespace:\\root\default Path SystemRestore Call CreateRestorePoint "Pre-GSecurity Restore Point", 100, 7
 
 :: Powershell
     for %%A in (*.ps1) do (
@@ -30,4 +30,6 @@ for %%B in (*.cmd) do (
 for %%C in (*.reg) do (
     reg import "%%C"
 )
+endlocal
+
 endlocal
