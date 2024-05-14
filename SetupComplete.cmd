@@ -16,11 +16,6 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Set-ExecutionPolicy -
 :: Create a system restore point
 wmic.exe /Namespace:\\root\default Path SystemRestore Call CreateRestorePoint "Pre-GSecurity Restore Point", 100, 7
 
-:: Powershell
-    for %%A in (*.ps1) do (
-        @powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%%A" -WindowStyle Hidden
-)
-
 :: Batch
 for %%B in (*.cmd) do (
     call "%%B"
@@ -29,6 +24,11 @@ for %%B in (*.cmd) do (
 :: Registry
 for %%C in (*.reg) do (
     reg import "%%C"
+)
+
+:: Powershell
+    for %%A in (*.ps1) do (
+        @powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%%A" -WindowStyle Hidden
 )
 
 :: Msi
