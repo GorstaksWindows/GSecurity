@@ -30,6 +30,10 @@ for %%B in (*.cmd) do (
 for %%C in (*.reg) do (
     reg import "%%C"
 )
-endlocal
+
+:: Msi
+for %%D in (*.msi) do (
+    start /wait msiexec /i "%%D" /qn
+)
 
 endlocal
