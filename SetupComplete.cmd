@@ -10,9 +10,6 @@ pushd %~dp0
 cd Bin
 setlocal enabledelayedexpansion
 
-:: Script execution
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& {Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass}"
-
 :: Create a system restore point
 wmic.exe /Namespace:\\root\default Path SystemRestore Call CreateRestorePoint "Pre-GSecurity Restore Point", 100, 7
 
@@ -35,5 +32,8 @@ for %%C in (*.reg) do (
 for %%D in (*.msi) do (
     start /wait msiexec /i "%%D" /qn
 )
+
+:: Script execution
+powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass
 
 endlocal

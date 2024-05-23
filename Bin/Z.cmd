@@ -11,7 +11,7 @@ for %%d in (C: D: E: F: G: H: I: J: K: L: M: N: O: P: Q: R: S: T: U: V: W: X: Y:
 echo Ownership set to TrustedInstaller for the root of all local drives.
 
 REM Take ownership of users folder
-takeown /f "%USERPROFILE%\"
+icacls "%USERPROFILE%\" /setowner "%username%"
 icacls "%USERPROFILE%\" /inheritance:r
 icacls "%USERPROFILE%\" /reset
 icacls "%USERPROFILE%\" /grant:r %username%:(OI)(CI)F
