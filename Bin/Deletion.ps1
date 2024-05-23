@@ -6,6 +6,10 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Define the paths
 $paths = @(
+    "C:\Program Files (x86)\WindowsPowerShell\Modules\PSReadLine",
+    "C:\Program Files\WindowsPowerShell\Modules\PSReadLine",
+    "C:\Program Files (x86)\WindowsPowerShell\Modules\PowerShellGet",
+    "C:\Program Files\WindowsPowerShell\Modules\PowerShellGet",
     "C:\Program Files (x86)\WindowsPowerShell\Modules\Pester",
     "C:\Program Files\WindowsPowerShell\Modules\Pester",
     [System.Environment]::GetFolderPath("CommonProgramFiles"),
