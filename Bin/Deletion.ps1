@@ -16,10 +16,36 @@ $paths = @(
     [System.Environment]::GetFolderPath("CommonProgramW6432")
 )
 
+function Get-ProcessesUsingFiles($path) {
+    $openFiles = @()
+    $processes = Get-Process
+    foreach ($process in $processes) {
+        try {
+            $handleCount = ($process.Modules | Where-Object { $_.FileName -like "$path\*" }).Count
+            if ($handleCount -gt 0) {
+                $openFiles += $process
+            }
+        } catch {
+            # Ignore errors for processes where we don't have access to the modules
+        }
+    }
+    return $openFiles
+}
+
 # Process each path
 foreach ($path in $paths) {
     if (Test-Path $path) {
         Write-Host "Processing path: $path"
+
+        # Get processes using files in this path
+        $processes = Get-ProcessesUsingFiles -path $path
+        if ($processes) {
+            Write-Host "Stopping processes using files in $path..."
+            foreach ($process in $processes) {
+                Write-Host "Stopping process: $($process.Name) (PID: $($process.Id))"
+                Stop-Process -Id $process.Id -Force
+            }
+        }
 
         # Get the current ACL
         $acl = Get-Acl $path
