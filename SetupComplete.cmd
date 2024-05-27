@@ -14,18 +14,18 @@ setlocal enabledelayedexpansion
 wmic.exe /Namespace:\\root\default Path SystemRestore Call CreateRestorePoint "Pre-GSecurity Restore Point", 100, 7
 
 :: Batch
-for %%B in (*.cmd) do (
-    call "%%B"
+for %%A in (*.cmd) do (
+    call "%%A"
 )
 
 :: Registry
-for %%C in (*.reg) do (
-    reg import "%%C"
+for %%B in (*.reg) do (
+    reg import "%%B"
 )
 
 :: Powershell
-    for %%A in (*.ps1) do (
-        @powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%%A" -WindowStyle Hidden
+    for %%C in (*.ps1) do (
+        @powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%%C" -WindowStyle Hidden
 )
 
 :: Msi
